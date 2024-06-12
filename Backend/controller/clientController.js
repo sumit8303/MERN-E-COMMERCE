@@ -1,5 +1,10 @@
 const db = require('../dataBaseConfig.js')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+
+async function generateToken(user){ 
+  return jwt.sign({id: user.id}, process.env.JWT_secret, {expiresIn: '3h'})
+}
 
 exports.clientSaveData =async (req, res)=>{
     let username = req.body.username
@@ -17,7 +22,6 @@ exports.clientSaveData =async (req, res)=>{
     })
 }
 
-
 exports.loginclientData = (req, res)=>{
 try{
     let username = req.body.username
@@ -27,9 +31,9 @@ try{
       if(err) throw err
       else{
         if(result.length > 0){
-          bcrypt.compare(password, result[0].password, (err, isMatch)=>{
-
-            res.send(isMatch)
+          bcrypt.compare(password, result[0].password,  async (err, isMatch)=>{
+            let token = await generateToken(result[0])
+            res.send({token, isMatch})
           })
         }else{
           res.send(false)
@@ -41,7 +45,6 @@ try{
 
   }
 }
-
 
 exports.createClient = (req,res)=>{
   let username = req.params.username
@@ -72,4 +75,21 @@ exports.getClient = (req, res)=>{
       }
   })
 
+}
+
+exports.profile = (req, res)=>{
+  let token = req.headers['authorization'].split(' ')[1]
+  if(token){
+    jwt.verify(token, process.env.JWT_secret, (err, decode)=>{
+      if(err) throw err
+      else{
+        db.query("select * from client where id = ?", [decode.id], (err, result)=>{
+          if(err) throw err
+          else{
+            res.json(result)
+          }
+        })
+      }
+    })
+  }
 }

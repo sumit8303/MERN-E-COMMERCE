@@ -196,7 +196,7 @@ export default function Sidebar() {
           </Link>
         </div>
         {
-        navUser &&  navUser.map((data)=>(
+          navUser &&  navUser.map((data)=>(
             <div className="ml-2 mt-2 hidden lg:block">
           <span className="relative inline-block">
             <img
@@ -204,9 +204,11 @@ export default function Sidebar() {
               src={`http://localhost:3000/${data.image}`}
               alt="Dan_Abromov"
             />
-            <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-600 ring-2 ring-white"></span>
           </span>
+            <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-600 ring-2 ring-white"></span>
         </div>
+
+        
         ))
         }
        </div>

@@ -5,8 +5,12 @@ const uploads = require('../multerConfig.js')
 
 router.post('/clientData',uploads.single('image'), clientController.clientSaveData)
 router.post('/loginclientData', clientController.loginclientData)
+
 router.get('/createCleint/:username', clientController.createClient)
 
 router.get('/getClient/:username', clientController.getClient)
+
+router.get('/profile', clientController.profile)
+
 
 module.exports = router

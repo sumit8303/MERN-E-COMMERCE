@@ -6,7 +6,7 @@ import axios from 'axios'
 
 export default function SignIn() {
   let {setUsername} = useContext(UserContext)
- 
+ let {login} = useContext(UserContext)
 
   let [data, setData]= useState({
     username:'',
@@ -21,9 +21,10 @@ export default function SignIn() {
   }
   async function handleSubmit(e){
     e.preventDefault()
-    let result = await axios.post('http://127.0.0.1:3000/api/loginclientData', data)
-    console.log(result)
-    if(result.data == true){
+    let result=  await login(data.username, data.password)
+    // let result = await axios.post('http://127.0.0.1:3000/api/loginclientData', data)
+    // console.log(result)
+    if(result == true){
       setUsername(data.username)
       navigation('/')
       createClientTable(data.username)

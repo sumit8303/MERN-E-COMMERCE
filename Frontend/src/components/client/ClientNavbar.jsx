@@ -28,6 +28,7 @@ export default function ClientNavbar() {
     setIsMenuOpen(!isMenuOpen)
   }
   let {list} = useContext(UserContext)
+  let {username} = useContext(UserContext)
   let [data, setData] = useState([])
   useEffect(()=>{
     getClient()
