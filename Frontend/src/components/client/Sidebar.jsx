@@ -29,7 +29,7 @@ const menuItems = [
 ]
 
 export default function Sidebar() {
-
+let [show, setShow] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 
   const toggleMenu = () => {
@@ -40,11 +40,13 @@ export default function Sidebar() {
   let [inp, setInp] = useState('')
   let [list, setList] = useState('')
   let [navUser, setNavUser] = useState([])
+
+  let {auth, logOut} = useContext(UserContext)
   // let{setList} = useContext(UserContext)
   useEffect(() => {
     getData();
     getCart()
-  }, []);
+  }, [auth]);
   async function getData() {
     let result = await axios.get("http://127.0.0.1:3000/api/getData");
     setData(result.data);
@@ -92,12 +94,12 @@ export default function Sidebar() {
     }
   }
 
-  let {username } =useContext(UserContext)
-  let navigation = useNavigate()
 
+  
+  let navigation = useNavigate()
   async function addToCart(data){
-    if(username){
-      await axios.post(`http://localhost:3000/api/saveCart/${username}`, {
+    if(auth.isAuthorized){
+      await axios.post(`http://localhost:3000/api/saveCart/${auth.username}`, {
         shoesBrand: data.shoesBrand,
         shoesType: data.shoesType,
         shoesRating: data.shoesRating,
@@ -112,27 +114,33 @@ export default function Sidebar() {
     }
     }
   async function getCart(){
-   if(username){
-    let result = await axios.get(`http://localhost:3000/api/getCart/${username}`)
+   if(auth.isAuthorized){
+    let result = await axios.get(`http://localhost:3000/api/getCart/${auth.username}`)
     setList(result.data.length)
    }
   }
   async function getClient(){
-   if(username){
-    let result = await axios.get(`http://localhost:3000/api/getClient/${username}`)
+   if(auth.username){
+    let result = await axios.get(`http://localhost:3000/api/getClient/${auth.username}`)
     setNavUser(result.data)
    }
   }
   console.log(navUser)
   useEffect(()=>{
     getClient()
-  }, [username])
+  }, [auth])
   useEffect(()=>{
     getDataByBrand()
     if(inp ==''){
       getData()
     }
   },[inp])
+
+  function handleLogout(){
+    alert('You want to LogOut?')
+    logOut()
+    window.location.reload()
+  }
   return (
     <>
 <div className="fixed z-50 w-full bg-white">
@@ -197,17 +205,24 @@ export default function Sidebar() {
         </div>
         {
           navUser &&  navUser.map((data)=>(
-            <div className="ml-2 mt-2 hidden lg:block">
-          <span className="relative inline-block">
+            <div className="ml-2 mt-2 hidden lg:block relative">
+          <span className="relative inline-block" onClick={()=>setShow(!show)}>
             <img
               className="h-10 w-10 rounded-full"
+              
               src={`http://localhost:3000/${data.image}`}
               alt="Dan_Abromov"
             />
           </span>
             <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-600 ring-2 ring-white"></span>
-        </div>
+            {show &&<div className="h-[200px] w-[150px] rounded-[20px] bg-red-400 absolute right-[0px] flex flex-col justify-evenly items-center">
+              <h2 className='uppercase font-bold text-3xl'>{data.username}</h2>
+                  <button className='p-2 bg-black text-white rounded-xl'
+                  onClick={handleLogout}
+                  >Logout</button></div>}
+           
 
+        </div>
         
         ))
         }

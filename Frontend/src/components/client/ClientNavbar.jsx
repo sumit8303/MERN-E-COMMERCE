@@ -28,15 +28,15 @@ export default function ClientNavbar() {
     setIsMenuOpen(!isMenuOpen)
   }
   let {list} = useContext(UserContext)
-  let {username} = useContext(UserContext)
+  let {auth} = useContext(UserContext)
   let [data, setData] = useState([])
   useEffect(()=>{
     getClient()
-  }, [username])
+  }, [auth])
    
   async function getClient(){
-    if(username){
-      let result = await axios.get(`http://localhost:3000?api/getClient/${username}`)
+    if(auth.username){
+      let result = await axios.get(`http://localhost:3000/api/getClient/${auth.username}`)
       setData(result.data)
     }
   }

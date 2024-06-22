@@ -33,7 +33,7 @@ exports.getCart = (req, res)=>{
 exports.deleteCart = (req, res)=>{
     let id = req.params.id
     let username = req.params.username
-    let sql = `delete from $ where id = ?`
+    let sql = `delete from ${username} where id = ?`
     db.query(sql, [id], (err, result)=>{
         if(err) throw err
         else{

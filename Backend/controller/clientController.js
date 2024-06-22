@@ -20,7 +20,7 @@ exports.clientSaveData =async (req, res)=>{
             res.send('Client Data Saved')
         }
     })
-}
+}  
 
 exports.loginclientData = (req, res)=>{
 try{
@@ -86,7 +86,7 @@ exports.profile = (req, res)=>{
         db.query("select * from client where id = ?", [decode.id], (err, result)=>{
           if(err) throw err
           else{
-            res.json(result)
+            res.json(result[0])
           }
         })
       }

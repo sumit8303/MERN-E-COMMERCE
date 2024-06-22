@@ -5,7 +5,7 @@ import UserContext from '../../context/UserContext'
 import axios from 'axios'
 
 export default function SignIn() {
-  let {setUsername} = useContext(UserContext)
+  
  let {login} = useContext(UserContext)
 
   let [data, setData]= useState({
@@ -23,9 +23,9 @@ export default function SignIn() {
     e.preventDefault()
     let result=  await login(data.username, data.password)
     // let result = await axios.post('http://127.0.0.1:3000/api/loginclientData', data)
-    // console.log(result)
+    // console.log(result, "data")
     if(result == true){
-      setUsername(data.username)
+   
       navigation('/')
       createClientTable(data.username)
     }else{

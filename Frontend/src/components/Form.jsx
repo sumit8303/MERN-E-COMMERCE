@@ -5,17 +5,6 @@ import { useNavigate } from 'react-router-dom'
 
 export default function Form() {
   let navigation = useNavigate()
-  // let [data, setData]= useState({
-  //   shoesBrand: "",
-  //   shoesRating: "",
-  //   shoesPrice: "",
-  // })
-
-  // const {shoesBrand, shoesRating, shoesPrice} = data
-
-  // function handleChange(e){
-  //   setData({...data, [e.target.name]: e.target.value})
-  // }
 
   let [shoesBrand, setShoesBrand] = useState('')
 let [shoesRating, setShoesRating] = useState('')
