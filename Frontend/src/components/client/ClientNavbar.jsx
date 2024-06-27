@@ -86,8 +86,8 @@ export default function ClientNavbar() {
           >
             
             <span className={`${ list ? 'w-[20px] text-center text-2xl top-[-1px] right-[42px] rounded h-[30px] bg-red-600 absolute' : 'hidden' }`}>{list}</span>
-          </Link>
-        </div>
+          </Link> 
+        </div> 
         <div className="ml-2 mt-2 hidden lg:block">
           <span className="relative inline-block">
             <img

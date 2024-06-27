@@ -13,7 +13,8 @@ import Protected from './components/Protected.jsx'
 import AdminLogin from './components/AdminLogin.jsx'
 import Cart from './components/client/Cart.jsx'
 import SignIn from './components/client/Signin.jsx'
-import ClientSignup from './components/client/CleintSignup.jsx'
+
+import CleintSignup from './components/client/CleintSignup.jsx'
 
 
 
@@ -24,7 +25,7 @@ const router = createBrowserRouter(
       <Route path='' element= {<Sidebar/>}/>
       <Route path='/cart' element= {<Cart/>}/>
       <Route path='/signin' element= {<SignIn/>}/>
-      <Route path='/clientsignup' element= {<ClientSignup/>}/>
+      <Route path='/clientsignup' element= {<CleintSignup/>}/>
     </Route>
 
 

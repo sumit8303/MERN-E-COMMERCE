@@ -12,10 +12,10 @@ export default function SignIn() {
     username:'',
     password: ''
   })
-  let navigation = useNavigate()
-  
   const {username, password} = data
 
+  let navigation = useNavigate()
+  
   function handleChange(e){
     setData({...data, [e.target.name]: e.target.value})
   }
@@ -30,11 +30,11 @@ export default function SignIn() {
       createClientTable(data.username)
     }else{
       alert("You enter wrong data")
-    }
+    } 
   }
 
   async function createClientTable(username){
-    await axios.get(`http://localhost:3000/api/createCleint/${username}`)
+    await axios.get(`http://localhost:3000/api/createClient/${username}`) 
   }
   return (
     <section>

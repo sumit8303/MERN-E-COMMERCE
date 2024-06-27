@@ -41,6 +41,12 @@ export default function Table() {
                       </th>
                       <th
                         scope="col"
+                        className="px-4 py-3.5 text-left text-sm font-normal text-gray-700"
+                      >
+                        <span>shoesCategory</span>
+                      </th>
+                      <th
+                        scope="col"
                         className="px-12 py-3.5 text-left text-sm font-normal text-gray-700"
                       >
                         shoesRating
@@ -72,6 +78,9 @@ export default function Table() {
                             </div>
                           </div>
                         </td>
+                              <div className="text-sm font-medium text-gray-900">
+                                {data.shoesCategory}
+                              </div>
                         <td className="whitespace-nowrap px-12 py-4">
                           <div className="text-sm text-gray-900 ">
                             {data.shoesRating}

@@ -9,6 +9,7 @@ export default function Form() {
   let [shoesBrand, setShoesBrand] = useState('')
 let [shoesRating, setShoesRating] = useState('')
 let [shoesPrice, setShoesPrice] = useState('')
+let [shoesCategory, setShoesCategory] = useState('')
 let [shoesImage, setShoesImage] = useState(null)
 
 
@@ -19,6 +20,7 @@ console.log(shoesImage)
       data.append("shoesBrand", shoesBrand)
       data.append("shoesRating", shoesRating)
       data.append("shoesPrice", shoesPrice)
+      data.append("shoesCategory", shoesCategory)
       data.append("shoesImage", shoesImage)
         e.preventDefault()        
         await axios.post('http://localhost:3000/api/saveData', data,{
@@ -38,6 +40,22 @@ console.log(shoesImage)
             
             <form action="#" method="POST" className="mt-8" onSubmit={handleSubmit}>
               <div className="space-y-5">
+                <div>
+                  <label htmlFor="name" className="text-base font-medium text-gray-900">
+                    {' '}
+                    Shoes Category{' '}
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                      type="text"
+                      placeholder="Category Name"
+                      id="name"
+                      name="shoesCategory"
+                      onChange={(e)=>setShoesCategory(e.target.value)}
+                    ></input>
+                  </div>
+                </div>
                 <div>
                   <label htmlFor="name" className="text-base font-medium text-gray-900">
                     {' '}

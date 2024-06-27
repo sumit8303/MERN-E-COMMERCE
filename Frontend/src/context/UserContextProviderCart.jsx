@@ -3,7 +3,6 @@ import UserContext from './UserContext'
 import axios from 'axios'
 
 
-
 export default function UserContextProviderCart({children}) {
     let [list, setList] = useState('')
     let [auth, setAuth] = useState({
@@ -16,7 +15,9 @@ export default function UserContextProviderCart({children}) {
       let result = await axios.post('http://localhost:3000/api/loginclientData', {username, password})
       localStorage.setItem('token', result.data.token)
       setAuth({token:result.data.token, isAuthorized:true, username:username})
+       if(result.data.isMatch == true){
         return true
+       }
       }
     let logOut = ()=>{
       localStorage.removeItem('token')

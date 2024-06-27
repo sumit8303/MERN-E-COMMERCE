@@ -4,9 +4,10 @@ exports.saveData = (req, res)=>{
     let shoesBrand = req.body.shoesBrand
     let shoesRating = req.body.shoesRating
     let shoesPrice = req.body.shoesPrice
+    let shoesCategory = req.body.shoesCategory
     let shoesImage = req.file.filename
-    let value = [[shoesBrand, shoesRating, shoesPrice, shoesImage]]
-    let sql = 'insert into shoes(shoesBrand, shoesRating, shoesPrice, shoesImage) values?'
+    let value = [[shoesBrand, shoesRating, shoesPrice,shoesCategory, shoesImage]]
+    let sql = 'insert into shoes(shoesBrand, shoesRating, shoesPrice,shoesCategory, shoesImage) values?'
     db.query(sql, [value], (err, result)=>{
         if(err) throw err
         else{

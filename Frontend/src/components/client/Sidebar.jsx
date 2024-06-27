@@ -13,20 +13,7 @@ import {useNavigate} from 'react-router-dom'
 import UserContext from "../../context/UserContext";
 import { Menu, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
-const menuItems = [
-  {
-    name: 'Home',
-    href: '#',
-  },
-  {
-    name: 'About',
-    href: '#',
-  },
-  {
-    name: 'Contact',
-    href: '#',
-  },
-]
+
 
 export default function Sidebar() {
 let [show, setShow] = useState(false)
@@ -72,6 +59,11 @@ let [show, setShow] = useState(false)
     let final = result.data.filter((item)=>item.shoesPrice>=16000 && item.shoesPrice<= 20000)
     setData(final)
   }
+  async function TwentyToFourty(){
+    let result = await axios.get('http://127.0.0.1:3000/api/getData')
+    let final = result.data.filter((item)=>item.shoesPrice>=16000 && item.shoesPrice<= 40000)
+    setData(final)
+  }
    async function nikeshoes(){
     let result = await axios.get("http://127.0.0.1:3000/api/getData");
     let final = result.data.filter((item)=>item.shoesBrand==="Nike")
@@ -87,6 +79,48 @@ let [show, setShow] = useState(false)
     let final = result.data.filter((item)=>item.shoesBrand==="Blackberry")
     setData(final)
   }
+  async function fiveStar(){ 
+    let result = await axios.get("http://127.0.0.1:3000/api/getData")
+    let final = result.data.filter((item)=>item.shoesRating == 5)  
+    setData(final)
+  }
+  
+  async function fourStar(){ 
+    let result = await axios.get("http://127.0.0.1:3000/api/getData")
+    let final = result.data.filter((item)=>item.shoesRating == 4)  
+    setData(final)
+  }
+  async function threeStar(){ 
+    let result = await axios.get("http://127.0.0.1:3000/api/getData")
+    let final = result.data.filter((item)=>item.shoesRating == 3)  
+    setData(final)
+  }
+  async function twoStar(){ 
+    let result = await axios.get("http://127.0.0.1:3000/api/getData")
+    let final = result.data.filter((item)=>item.shoesRating == 2)  
+    setData(final)
+  }
+  async function oneStar(){ 
+    let result = await axios.get("http://127.0.0.1:3000/api/getData")
+    let final = result.data.filter((item)=>item.shoesRating == 1)  
+    setData(final)
+  }
+  async function shoesChange(){ 
+    let result = await axios.get("http://127.0.0.1:3000/api/getData")
+    let final = result.data.filter((item)=>item.shoesCategory == "Shoes")  
+    setData(final)
+  }
+  async function clothesChange(){ 
+    let result = await axios.get("http://127.0.0.1:3000/api/getData")
+    let final = result.data.filter((item)=>item.shoesCategory == "Clothes")  
+    setData(final)
+  }
+  async function electronicChange(){ 
+    let result = await axios.get("http://127.0.0.1:3000/api/getData")
+    let final = result.data.filter((item)=>item.shoesCategory == "Electronic")  
+    setData(final)
+  }
+  
   async function getDataByBrand(){
     if(inp){
       let result = await axios.get(`http://127.0.0.1:3000/api/getDataByBrand/${inp}`);
@@ -160,27 +194,21 @@ let [show, setShow] = useState(false)
               />
             </svg>
           </span>
-          <span className="font-bold">DevUI</span>
+          <span className="font-bold">My Shopping</span>
         </div>
-        <div className="hidden lg:block">
-          <ul className="inline-flex space-x-8">
-            {menuItems.map((item) => (
-              <li key={item.name}>
-                <a
-                  href={item.href}
-                  className="text-sm font-semibold text-gray-800 hover:text-red-800 hover:underline"
-                >
-                  {item.name}
-                </a>
-              </li>
-              
-            ))}
+        <div className="hidden lg:block ">
+          <ul className="inline-flex space-x-8 ">
+           <nav className="flex justify-evenly w-60	font-normal ">
+            <li className="hover:text-red-400 hover:cursor-pointer" onClick={shoesChange}>Shoes</li> 
+            <li className="hover:text-red-400 hover:cursor-pointer" onClick={electronicChange}>Electronic</li>
+            <li className="hover:text-red-400 hover:cursor-pointer" onClick={clothesChange}>Clothes</li>
+           </nav>
           </ul>
         </div>
          
        <div className="flex items-center gap-[30px]">
        <form class="max-w-md mx-auto">
-        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"></label>
         <div class="relative">
           <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -220,7 +248,6 @@ let [show, setShow] = useState(false)
                   <button className='p-2 bg-black text-white rounded-xl'
                   onClick={handleLogout}
                   >Logout</button></div>}
-           
 
         </div>
         
@@ -334,6 +361,12 @@ let [show, setShow] = useState(false)
       >
         <span className="mx-2 text-sm text-slate-800	font-medium">16000Rs - 20000Rs</span>
       </button>
+      <button
+        className="flex transform items-center rounded-lg px-3 py-2 text-gray-200 transition-colors duration-300 hover:bg-gray-400 hover:text-gray-700"
+        onClick={TwentyToFourty}
+      >
+        <span className="mx-2 text-sm text-slate-800	font-medium">20000Rs - 40000Rs</span>
+      </button>
       
     </div>
     
@@ -364,27 +397,35 @@ let [show, setShow] = useState(false)
     <div className="space-y-3 ">
       <label className="px-3 text-xs font-semibold uppercase text-black">Rating</label>
       <button
-        className="flex transform items-center rounded-lg px-3 py-2 text-gray-800 transition-colors duration-300 hover:bg-gray-400 hover:text-red-700"
+        className="flex transform items-center rounded-lg px-3 py-2 text-gray-800 transition-colors duration-300 hover:bg-gray-400 hover:text-red-700 "
+        onClick={oneStar}
+        
       >
         <span className="mx-2 text-sm font-medium">⭐</span>
       </button>
       <button
         className="flex transform items-center rounded-lg px-3 py-2 text-gray-800 transition-colors duration-300 hover:bg-gray-400 hover:text-gray-700"
+        onClick={twoStar}
+
       >
         <span className="mx-2 text-sm font-medium">⭐⭐</span>
       </button>
       <button
         className="flex transform items-center rounded-lg px-3 py-2 text-gray-800 transition-colors duration-300 hover:bg-gray-400 hover:text-gray-700"
+        onClick={threeStar}
+
       >
         <span className="mx-2 text-sm font-medium">⭐⭐⭐</span>
       </button>
       <button
         className="flex transform items-center rounded-lg px-3 py-2 text-gray-800 transition-colors duration-300 hover:bg-gray-400 hover:text-gray-700"
+       onClick={fourStar}
       >
         <span className="mx-2 text-sm font-medium">⭐⭐⭐⭐</span>
       </button>
       <button
         className="flex transform items-center rounded-lg px-3 py-2 text-gray-800 transition-colors duration-300 hover:bg-gray-400 hover:text-gray-700"
+        onClick={fiveStar}
       >
         <span className="mx-2 text-sm font-medium">⭐⭐⭐⭐⭐</span>
       </button>
@@ -396,7 +437,7 @@ let [show, setShow] = useState(false)
 </aside>
 
 
-      <div className="flex absolute flex flex-wrap justify-evenly w-[1000px] left-[265px] top-[70px] gap-[30px]">
+      <div className=" flex absolute flex flex-wrap justify-evenly w-[1000px] left-[265px] top-[70px] gap-[30px]">
         {data.map((data) => (
           <div className="w-[300px] rounded-md border">
             <img
@@ -406,13 +447,13 @@ let [show, setShow] = useState(false)
             />
             <div className="p-4">
               <h1 className="text-lg font-semibold">
-                ShoesBrand :-<span>{data.shoesBrand}</span>
+                Product Brand :-<span>{data.shoesBrand}</span>
               </h1>
               <h1 className="text-lg font-semibold">
-                ShoesRating :-<span>{data.shoesRating}</span>
+                Product Rating :-<span>{data.shoesRating}</span>
               </h1>
               <h1 className="text-lg font-semibold">
-                ShoesPrice:-<span>{data.shoesPrice}</span>
+                Product Price:-<span>{data.shoesPrice}</span>
               </h1>
               <button
                 type="button"
