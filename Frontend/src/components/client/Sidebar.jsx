@@ -242,9 +242,9 @@ let [show, setShow] = useState(false)
               alt="Dan_Abromov"
             />
           </span>
-            <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-600 ring-2 ring-white"></span>
-            {show &&<div className="h-[200px] w-[150px] rounded-[20px] bg-red-400 absolute right-[0px] flex flex-col justify-evenly items-center">
-              <h2 className='uppercase font-bold text-3xl'>{data.username}</h2>
+            <span className=" absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-600 ring-2 ring-white"></span>
+            {show &&<div className=" h-[200px] w-[150px] rounded-[20px] bg-red-400 absolute right-[0px] flex flex-col justify-evenly items-center">
+              <h2 className='text-xl uppercase font-bold'>{data.username}</h2>
                   <button className='p-2 bg-black text-white rounded-xl'
                   onClick={handleLogout}
                   >Logout</button></div>}
@@ -447,13 +447,13 @@ let [show, setShow] = useState(false)
             />
             <div className="p-4">
               <h1 className="text-lg font-semibold">
-                Product Brand :-<span>{data.shoesBrand}</span>
+                Product Brand :-<span className="font-normal">{data.shoesBrand}</span>
               </h1>
               <h1 className="text-lg font-semibold">
-                Product Rating :-<span>{data.shoesRating}</span>
+                Product Rating :-<span className="font-normal">{data.shoesRating}</span>
               </h1>
               <h1 className="text-lg font-semibold">
-                Product Price:-<span>{data.shoesPrice}</span>
+                Product Price:-<span className="font-normal">{data.shoesPrice}</span>
               </h1>
               <button
                 type="button"
