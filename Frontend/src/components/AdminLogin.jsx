@@ -23,7 +23,7 @@ export default function AdminLogin() {
     let result = await axios.post('http://127.0.0.1:3000/api/loginData', data)
     if(result.data == true){
       setPass(true)
-      navigation('/admin')
+      navigation('/admin') 
     }else{
       alert('You enter wrong data')
     }

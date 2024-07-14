@@ -29,23 +29,51 @@ export default function UserContextProviderCart({children}) {
       try{
         if(token){
           let result = await axios.get('http://localhost:3000/api/profile')
-          setAuth({token:token, isAuthorized:true , username: result.data.username})
+          let username  = result.data.email.split('@')[0]
+          console.log(result)
+          if(username){
+            createClientTable(username)
+          }
+        setAuth({token:token, isAutherzed:true, username: username, id:result.data.id})
         }
       } catch(error){
         logOut()
       }
     }
 
+    async  function getGoogleProfile(){
+      let token = localStorage.getItem('token')
+      // try {
+        if(token){
+          let result = await axios.get('http://127.0.0.1:3000/auth/verify')
+          let username  = result.data.email.split('@')[0]
+          console.log(result)
+          if(username){
+            createClientTable(username)
+          }
+        setAuth({token:token, isAutherzed:true, username: username, id:result.data.id})
+
+          
+        }
+        
+      // } catch (error) {
+      //   logOut()
+      // }
+    }
+    async function createClientTable(username){
+      await axios.get(`http://localhost:3000/api/createClient/${username}`)
+    }
     useEffect(()=>{
       let token = localStorage.getItem('token')
       if(token){
         axios.defaults.headers.common['Authorization']= `Bearer ${token}`
         profile()
+        getGoogleProfile()
       }
-    }, [])
+    }, [auth.username])
 
   return (
-    <UserContext.Provider value={{list,setList, login, logOut, auth}}>
+    <UserContext.Provider value={{list,setList, login, logOut, auth, getGoogleProfile}}>
         {children}
     </UserContext.Provider>
   )

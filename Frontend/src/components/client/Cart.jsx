@@ -11,8 +11,9 @@ export default function Cart() {
   useEffect(()=>{
     getCart()
   }, [auth])
+
   async function getCart(){
-    if(auth.isAuthorized){
+    if(auth.username){
       let result = await axios.get(`http://localhost:3000/api/getCart/${auth.username}`)
     setData(result.data)
     setList(result.data.length)

@@ -1,16 +1,25 @@
 const express = require('express')
 const db = require('./dataBaseConfig.js')
+const dotenv = require('dotenv')
+dotenv.config()
 const shoesRouter = require('./route/shoesRoute.js')
 const adminRouter = require('./route/adminRoute.js')
 const cartRouter = require('./route/cartRoute.js')
 const clientRouter = require('./route/clientRoute.js')
-const dotenv = require('dotenv')
+const session = require('express-session')
+const passport = require('passport')
+const authRoute = require('./authRoutes.js')
 const cors = require('cors')
-dotenv.config({
-    path:'./.env'
-})
 
 let app = express()
+
+app.use(session({
+    secret:process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized:true
+}))
+
+
 app.use(express.json())
 app.use(cors())
 // app.set('view Engine', 'ejs')
@@ -81,6 +90,7 @@ CREATE TABLE IF NOT EXISTS client(
     email VARCHAR(255) NULL,
     password VARCHAR(255) NULL,
     image VARCHAR(255) NULL,
+    googleId VARCHAR(255) NULL,
     PRIMARY KEY(id)
 );`
 
@@ -103,3 +113,8 @@ app.use('/api', adminRouter)
 app.use('/api', cartRouter)
 
 app.use('/api', clientRouter)
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use('/auth', authRoute)

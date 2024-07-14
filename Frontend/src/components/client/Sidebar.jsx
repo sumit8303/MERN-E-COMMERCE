@@ -9,7 +9,7 @@ import {
   Wrench,
 } from "lucide-react";
 import axios from "axios";
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import UserContext from "../../context/UserContext";
 import { Menu, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
@@ -28,12 +28,24 @@ let [show, setShow] = useState(false)
   let [list, setList] = useState('')
   let [navUser, setNavUser] = useState([])
 
-  let {auth, logOut} = useContext(UserContext)
+  let {token} = useParams()
+  let {auth, getGoogleProfile, logOut} = useContext(UserContext)
+
+useEffect(()=>{
+  if(token){
+    localStorage.setItem('token', token)
+    getGoogleProfile()
+    navigation('/')
+  }
+}, [token])
+
+  
   // let{setList} = useContext(UserContext)
   useEffect(() => {
     getData();
     getCart()
   }, [auth]);
+
   async function getData() {
     let result = await axios.get("http://127.0.0.1:3000/api/getData");
     setData(result.data);
@@ -132,7 +144,7 @@ let [show, setShow] = useState(false)
   
   let navigation = useNavigate()
   async function addToCart(data){
-    if(auth.isAuthorized){
+    if(auth.username){
       await axios.post(`http://localhost:3000/api/saveCart/${auth.username}`, {
         shoesBrand: data.shoesBrand,
         shoesType: data.shoesType,
@@ -148,27 +160,32 @@ let [show, setShow] = useState(false)
     }
     }
   async function getCart(){
-   if(auth.isAuthorized){
+   if(auth.username){
     let result = await axios.get(`http://localhost:3000/api/getCart/${auth.username}`)
     setList(result.data.length)
    }
   }
-  async function getClient(){
-   if(auth.username){
-    let result = await axios.get(`http://localhost:3000/api/getClient/${auth.username}`)
-    setNavUser(result.data)
-   }
-  }
-  console.log(navUser)
+  
+  console.log(navUser) 
   useEffect(()=>{
     getClient()
-  }, [auth])
+  }, [list])
   useEffect(()=>{
     getDataByBrand()
     if(inp ==''){
       getData()
     }
   },[inp])
+
+
+  async function getClient(){
+    if(auth.id){
+     console.log(auth.id)
+    let result = await axios.get(`http://localhost:3000/api/getClient/${auth.id}`)
+    console.log(result.data)
+    setNavUser(result.data)
+   }
+  }
 
   function handleLogout(){
     alert('You want to LogOut?')
@@ -238,13 +255,13 @@ let [show, setShow] = useState(false)
             <img
               className="h-10 w-10 rounded-full"
               
-              src={`http://localhost:3000/${data.image}`}
+              src={data.googleId ? data.image : `http://localhost:3000/${data.image}`}
               alt="Dan_Abromov"
-            />
+            /> 
           </span>
             <span className=" absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-600 ring-2 ring-white"></span>
             {show &&<div className=" h-[200px] w-[150px] rounded-[20px] bg-red-400 absolute right-[0px] flex flex-col justify-evenly items-center">
-              <h2 className='text-xl uppercase font-bold'>{data.username}</h2>
+              <h2 className='text-xl uppercase font-bold'>{data.username}</h2> 
                   <button className='p-2 bg-black text-white rounded-xl'
                   onClick={handleLogout}
                   >Logout</button></div>}

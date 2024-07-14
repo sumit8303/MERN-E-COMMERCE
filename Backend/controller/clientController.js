@@ -64,9 +64,10 @@ exports.createClient = (req,res)=>{
     })
 }
 
+
 exports.getClient = (req, res)=>{
   let username = req.params.username
-  let sql = "select * from client where username = ?"
+  let sql = "select * from client where id = ?"
 
   db.query(sql, [username], (err, result)=>{
       if(err) throw err
@@ -77,7 +78,7 @@ exports.getClient = (req, res)=>{
 
 }
 
-exports.profile = (req, res)=>{
+exports.profile = (req, res)=>{ 
   let token = req.headers['authorization'].split(' ')[1]
   if(token){
     jwt.verify(token, process.env.JWT_secret, (err, decode)=>{
